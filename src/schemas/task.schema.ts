@@ -7,6 +7,7 @@ export const taskSchema = z.object({
     content: z.string(),
     finished: z.boolean().default(false),
     categoryId: z.number().positive().nullish(),
+    userId: z.number().positive()
 })
 
 export const createTaskSchema = taskSchema.omit({id: true}).extend({category: createCategorySchema})

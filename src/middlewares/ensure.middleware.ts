@@ -37,6 +37,18 @@ class EnsureMiddleware {
         }
         return next()
     }
+
+    public isEmailUnique = async (req: Request, _: Response, next: NextFunction): Promise<void> => {
+        const {email} = req.body
+        if (!email) return next()
+
+        const foundEmail = await prisma.user.findFirst({where: {email}})
+        if (foundEmail){
+            throw new AppError("This email is already registered", 409)
+        }
+        
+        return next()
+    }
 }
 
 export const ensure = new EnsureMiddleware()
