@@ -13,7 +13,7 @@ export class UserController {
         return res.status(200).json(token)
     }
     public autologin = async (_: Request, res: Response): Promise<Response> => {
-        const {sub} = res.locals.decoded
+        const { sub } = res.locals.decoded
 
         const foundUser = await this.userService.autologin(sub)
 

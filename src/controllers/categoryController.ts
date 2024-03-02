@@ -10,7 +10,7 @@ export class CategoryController {
     }
 
     public delete = async (req: Request, res: Response): Promise<Response> => {
-        await this.categoryService.delete(req.params.categoryId)
+        await this.categoryService.delete(req.params.id)
         return res.status(204).json()
     }
 }

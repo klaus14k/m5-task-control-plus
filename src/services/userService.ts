@@ -14,25 +14,25 @@ export class UserService {
         return returnUserSchema.parse(newUser)
     }
     public login = async ({ email, password }: SessionCreate): Promise<SessionReturn> => {
-        let foundUser = await prisma.user.findFirst({where: {email}})
-        if (!foundUser){
+        let foundUser = await prisma.user.findFirst({ where: { email } })
+        if (!foundUser) {
             throw new AppError("User does not exist", 404)
         }
 
         const comparison = await compare(password, foundUser.password)
-        if (!comparison){
+        if (!comparison) {
             throw new AppError("Email and password don't match", 401)
         }
 
         const secret = process.env.JWT_SECRET!
         const expiresIn = process.env.EXPIRES_IN!
-        const accessToken = sign({email: foundUser.email}, secret, {expiresIn, subject: String(foundUser.id)})
+        const accessToken = sign({ email: foundUser.email }, secret, { expiresIn, subject: String(foundUser.id) })
 
-        return {accessToken, user: returnUserSchema.parse(foundUser)}
+        return { accessToken, user: returnUserSchema.parse(foundUser) }
     }
     public autologin = async (id: string): Promise<UserReturn> => {
-        const foundUser = await prisma.user.findFirst({where: {id: Number(id)}})
-        
+        const foundUser = await prisma.user.findFirst({ where: { id: Number(id) } })
+
         return returnUserSchema.parse(foundUser)
     }
 }

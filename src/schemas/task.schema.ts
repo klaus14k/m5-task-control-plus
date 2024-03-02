@@ -1,15 +1,14 @@
 import { z } from "zod"
-import { categorySchema, createCategorySchema } from "./category.schema"
+import { categorySchema } from "./category.schema"
 
 export const taskSchema = z.object({
     id: z.number().positive(),
-    title: z.string(),
-    content: z.string(),
+    title: z.string().min(1),
+    content: z.string().min(1),
     finished: z.boolean().default(false),
-    categoryId: z.number().positive().nullish(),
-    userId: z.number().positive()
+    categoryId: z.number().positive().nullish()
 })
 
-export const createTaskSchema = taskSchema.omit({id: true}).extend({category: createCategorySchema})
-export const readTaskSchema = taskSchema.extend({category: categorySchema.nullish()}).omit({categoryId: true})
+export const createTaskSchema = taskSchema.omit({ id: true })
 export const updateTaskSchema = taskSchema.partial()
+export const readTaskSchema = taskSchema.extend({ category: categorySchema.nullish() }).omit({ categoryId: true })
