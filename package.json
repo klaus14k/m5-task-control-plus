@@ -11,7 +11,7 @@
     "build": "npx tsc",
     "dev": "dotenv -e .env.develop -- tsnd --respawn src/server.ts",
     "migrate:dev": "dotenv -e .env.develop -- npx prisma migrate dev",
-    "migrate:deploy": "npx prisma migrate deploy",
+    "migrate:deploy": "dotenv -e .env.develop -- npx prisma migrate deploy",
     "test": "dotenv -e .env.test -- vitest",
     "migrate:test": "dotenv -e .env.test -- npx prisma migrate dev"
   },
