@@ -1,16 +1,20 @@
 Autenticação para API de controle de tarefas
 
-1 Introdução
+1 Introdução:
+
 Nesta entrega, colocaremos em prática nossos os conhecimentos aprendidos em aula, desenvolvendo uma autenticação para nossa API de gerenciamento de tarefas. Serão necessárias algumas mudanças nas regras de negócio, para se adequar as mudanças.
 
-2 Testes automáticos
+2 Testes automáticos:
+
 Para esta fase do projeto, será necessário um novo conjunto de testes automáticos, por isso, substitua a pasta de testes em seu projeto, pela pasta contida neste repositório.
 Tenha em mente que os testes também dependerão do jsonwebtoken para funcionar, por isso, será necessário instalar este pacote em seu projeto, bem como, configurar uma variável de ambiente JWT_SECRET.
 
-3 Banco de dados
+3 Banco de dados:
+
 Com os testes atualizados, o primeiro passo, será atualizar as tabelas do banco de dados. Desta vez, será sua tarefa criar o novo modelo, bem como os relacionamentos.
 
-3.1 User
+3.1 User:
+
 Crie um novo modelo User em schema.prisma, este deverá conter as seguintes colunas:
 
 id - inteiro, chave primária e autoincrementado.
@@ -18,16 +22,19 @@ name - texto, obrigatório.
 email - texto, obrigatório e único.
 password - texto, obrigatório.
 
-3.2 Relacionamentos
+3.2 Relacionamentos:
+
 Com o modelo User criado, estabeleça os relacionamentos conforme as especificações abaixo:
 1 usuário poderá ter muitas tarefas, caso o usuário seja excluído as tarefas serão excluídas em cascata.
 1 usuário poderá ter muitas categorias, caso o usuário seja excluído as categorias serão excluídas em cascata.
 
-3.3 Migração
+3.3 Migração:
+
 Com todas as alterações completas, realize a migração para alterar as tabelas no banco de dados. Lembre-se, existe um comando de migração para testes e outro para desenvolvimento (atualize ambos).
 Caso haja alguma restrição, exclua a pasta migrations em Prisma. E, ao tentar novamente, aceite reiniciar o banco de dados.
 
-4 Rotas e rotinas de usuário
+4 Rotas e rotinas de usuário:
+
 Um dos objetivos principais nesta entrega, é a criação do conjunto de rotas de usuário. Confira a tabela abaixo listando cada uma delas:
 
 Endereço - Método - Descrição
@@ -35,7 +42,8 @@ Endereço - Método - Descrição
 /users/login - POST - Rota de login de usuários.
 /users/profile - GET - Rota de autologin (recuperação do perfil via token).
 
-4.1 Cadastro de usuário POST /users
+4.1 Cadastro de usuário POST /users:
+
 Padrão de corpo
 
 {
@@ -61,7 +69,8 @@ STATUS (400) quando o corpo não é compatível com o padrão
 
 Utilize o Zod para fazer a validação correta do corpo de requisição.
 
-4.2 Login de usuário POST /user/login
+4.2 Login de usuário POST /user/login:
+
 Padrão de corpo
 
 {
@@ -93,7 +102,8 @@ STATUS (409) quando o corpo não é compatível com o padrão
 
 Utilize o Zod para fazer a validação correta do corpo de requisição.
 
-4.3 Recuperação de usuário /users/profile (Precisa de autorização)
+4.3 Recuperação de usuário /users/profile (Precisa de autorização):
+
 Padrão de resposta (200)
 
 {
@@ -102,7 +112,8 @@ Padrão de resposta (200)
     "email": "johndoe@email.com"
 }⁠
 
-5 Gerenciamento de token
+5 Gerenciamento de token:
+
 O gerenciamento do JSON Web Token deverá ser criado com base nos exemplos apresentados em aula.
 
 Deverá ser gerado um token no serviço da rota de login, este token deverá armazenar no "payload" o identificador do usuário.
@@ -115,10 +126,12 @@ STATUS (401) - O token é obrigatório
 
 STATUS (401) - Token inválido. Mensagem de erro será gerada pelo próprio JSON Web Token.
 
-6 Alterações nas regras de negócio existentes
+6 Alterações nas regras de negócio existentes:
+
 Todas as rotas de tarefa e categorias precisarão de autorização para serem acessadas.
 
-6.1 Rotas de tarefas
+6.1 Rotas de tarefas:
+
 Rota
 
 Alteração
@@ -148,7 +161,8 @@ STATUS (403) - Tarefa não pertence ao usuário
 
 { "message": "This user is not the task owner" }
 
-6.2 Rotas de categoria
+6.2 Rotas de categoria:
+
 Rota
 
 Alteração
@@ -166,11 +180,15 @@ STATUS (403) - Categoria não pertence ao usuário
 
 { "message": "This user is not the category owner" }
 
-7 Requisitos gerais
+7 Requisitos gerais:
+
 O projeto deverá seguir os padrões de arquitetura apresentados nas aulas.
 A senha deverá ser criptografada utilizando o bcrypt.
-8 Desafio
+
+8 Desafio:
+
 Conforme demonstrado nas aulas, realize o "deploy" da sua aplicação no render.
 
-9 Finalização
+9 Finalização:
+
 Com a entrega completa, e todos os teste em sucedidos, basta enviar para correção! Não esqueça de compartilhar o repositório com o time das correções.
